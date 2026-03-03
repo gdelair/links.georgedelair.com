@@ -70,7 +70,7 @@ class NetworkAnimation {
 
     drawConnections() {
         this.ctx.beginPath();
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+        this.ctx.strokeStyle = 'rgba(224, 122, 95, 0.1)';
 
         for (let i = 0; i < this.nodes.length; i++) {
             for (let j = i + 1; j < this.nodes.length; j++) {
@@ -80,7 +80,7 @@ class NetworkAnimation {
 
                 if (distance < this.maxDistance) {
                     const opacity = 1 - (distance / this.maxDistance);
-                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+                    this.ctx.strokeStyle = `rgba(224, 122, 95, ${opacity * 0.15})`;
                     this.ctx.beginPath();
                     this.ctx.moveTo(this.nodes[i].x, this.nodes[i].y);
                     this.ctx.lineTo(this.nodes[j].x, this.nodes[j].y);
@@ -95,13 +95,16 @@ class NetworkAnimation {
         if (this.mouseX !== null && this.mouseY !== null) {
             this.ctx.beginPath();
             this.ctx.arc(this.mouseX, this.mouseY, this.pushRadius, 0, Math.PI * 2);
-            this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            this.ctx.strokeStyle = 'rgba(224, 122, 95, 0.1)';
             this.ctx.stroke();
         }
-        
-        // Draw nodes
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        this.nodes.forEach(node => {
+
+        // Draw nodes with brand colors
+        this.nodes.forEach((node, i) => {
+            // Alternate between terracotta and sage green
+            this.ctx.fillStyle = i % 4 === 0
+                ? 'rgba(95, 163, 134, 0.6)'
+                : 'rgba(224, 122, 95, 0.6)';
             this.ctx.beginPath();
             this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
             this.ctx.fill();
